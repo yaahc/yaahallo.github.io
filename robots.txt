@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://yaah.dev/sitemap.xml
