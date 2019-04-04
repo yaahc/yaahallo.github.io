@@ -16,7 +16,7 @@ theme = "feather"
 
 generate_categories_pages = true
 generate_tags_pages = true
-check_external_links = true
+check_external_links = false
 
 [extra]
 # specify an image for the big header at the top of the page.
