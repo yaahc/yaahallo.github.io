@@ -18,10 +18,11 @@ email: dontemailme@yaah.dev
 description: >- # this means to ignore newlines until "baseurl:"
   A series of poorly written blog posts by a mediocre programmer with far worse
   writting skills who spends WAAAY too much of her time obsessing over rust.
-baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: "/" # the subpath of your site, e.g. /blog
 url: "https://yaah.dev" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: Yaahster
 github_username:  yaahallo
+permalink: /:title
 
 # Build settings
 markdown: kramdown
