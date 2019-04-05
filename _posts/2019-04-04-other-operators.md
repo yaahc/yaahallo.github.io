@@ -29,7 +29,7 @@ processWidget(std::shared_ptr<Widget>(new Widget), // potential
                                                    // leak!
 ```
 
-Potential resource leak, Wait... what? Let us refer to the documentation for the function call operator!
+Potential resource leak, Wait... what? Okay, well, I guess that means we should refer to the documentation for the function call operator.
 
 ```
 E ( A1, A2, A3,... )
