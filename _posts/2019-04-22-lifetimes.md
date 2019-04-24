@@ -4,6 +4,14 @@ title: "Lifetime definitions"
 categories: rust rustlang lifetime borrow reference generics
 ---
 
+# DISCLAIMER
+
+This is a WIP. It does not represent a full or even necessarily correct
+explanation of what these terms are or mean or how they relate. This is my
+attempt at articulating how I've taken to understanding them. This is going to
+evolve over time as I understand lifetimes and borrows better and I hope to
+rewrite this page as my understanding improves.
+
 # Confusing terms
 
 My problem with understanding lifetime heavy code is that I find all the terms
