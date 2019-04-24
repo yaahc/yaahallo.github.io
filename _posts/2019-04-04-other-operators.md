@@ -2,7 +2,7 @@
 layout: post
 title: "An Exploration of C++'s 'Other Operators'"
 date: 2019-04-04 13:39:00 -0700
-categories: jekyll update
+categories: c++ cpp rust rustlang
 ---
 
 # C++ Other Operators
@@ -15,13 +15,13 @@ Feel free to reference this while you are reading. I think it's a interesting re
 
 ## A Story of What's to Come
 
-I plan on going in order through the list of three operators from the above page. The function call operator, the comma operator, and the conditional operator (ternary conditional). The first story discusses the implications of [order of evaluation][1] in C++. It's a bit of an outlier and does not factor in much to the rest of the talk but I felt I could not leave one of the operators out. The second tale explores the behaviors of the often used and far less often understood comma operator. The last parable is about the conditional operator. It's the genesis of this post, and briefly visits the crazy ball of wax known as [value categories][2].
+I plan on going in order through the list of three operators from the above page. The function call operator, the comma operator, and the conditional operator (ternary conditional). The first story discusses the implications of [order of evaluation][1] in C++. It's a bit of an outlier and does not factor in much to the rest of the talk but I felt I could not leave one of the operators out. The second story explores the behaviors of the often used and far less often understood comma operator. The last story is about the conditional operator. It's the genesis of this post, and briefly visits the crazy ball of wax known as [value categories][2].
 
 Let's get right into it!
 
 ## The Function Call Operator
 
-This story starts with a simple example from `Effective Modern C++` chapter 21.
+This story starts with a simple example from "Effective Modern C++" chapter 21.
 
 ```cpp
 processWidget(std::shared_ptr<Widget>(new Widget), // potential
@@ -57,7 +57,7 @@ Unsequenced? Indeterminately Sequenced? What does that mean? Let's dig deeper.
       the next time the same expression is evaluated.
 ```
 
-Okay got it, the expressions in the function call can be reordered however the compiler likes. In this case those expressions are `new Widget`, `std::shared_ptr<Widget>(ptr from previous expression)`, and `computePriority()`. The real problem occurs if one of the expressions can throw an exception. In this case we'd be worried about computePriority(). If the compiler orders the execution such that it first allocates the widget, then calls computePriority prior to constructing a shared pointer to manage the new Widget's memory, and the computePriority call throws, we will never construct a shared pointer to manage the memory for our Widget, and we unknowingly miss out on all the wonderful RAII style memory management we thought we'd signed up for.
+Okay got it, the expressions in the function call can be reordered however the compiler likes. In this case those expressions are `new Widget`, `std::shared_ptr<Widget>(ptr from previous expression)`, and `computePriority()`. The real problem occurs if one of the expressions can throw an exception. In this case we'd be worried about `computePriority()`. If the compiler orders the execution such that it first allocates the widget, then calls `computePriority()` prior to constructing a shared pointer to manage the new Widget's memory, and the `computePriority()` call throws, we will never construct a shared pointer to manage the memory for our Widget, and we unknowingly miss out on all the wonderful RAII style memory management we thought we'd signed up for.
 
 What are we supposed to do you might ask. Let's start with the name of the chapter this nugget of wisdom came from, `Prefer std::make_unique and std::make_shared to direct use of new`. Oh, okay then.
 
@@ -68,28 +68,28 @@ processWidget(std::make_shared<Widget>(), // no potential
 
 By using `make_shared` rather than `new` and a constructor we turn two expressions into one as far as the function call operator is concerned. It will probably make sure not to interleave a throw from another expression with our expression. Now we either get to run make_shared and then throw after, in which case we get our widget deallocated. Or we throw before make_shared, and we never allocate it in the first place. Perfect!
 
-What's the moral of the story? I'm inclined to say it's `avoid new whenever possible` but that's just me. If you need dynamic memory you should probably always use some generic class that abstracts the memory management for you. That's literally the only way to allocate dynamic memory in safe Rust and I hear they're pretty good about not messing up their memory management. Particularly with shared_ptr there are other benefits such as `make_shared` only requiring one dynamic memory allocation whereas the constructor plus new require two. Though this can have some undesirable side effects when you mix in large memory allocations and weak_ptrs. If you want to learn more about the intricacies of smart pointers in C++ I cannot recommend `Effective Modern C++` enough.
+What's the moral of the story? I'm inclined to say it's `avoid new whenever possible` but that's just me. If you need dynamic memory you should probably always use some generic class that abstracts the memory management for you. That's the only way to allocate dynamic memory in safe Rust and I hear they're pretty good about not messing up their memory management. Particularly with shared_ptr there are other benefits such as `make_shared` only requiring one dynamic memory allocation whereas the constructor plus new require two. Though this can have some undesirable side effects when you mix in large memory allocations and weak_ptrs. If you want to learn more about the intricacies of smart pointers in C++ I cannot recommend `Effective Modern C++` enough.
 
 ## The Comma Operator
 
 This next tale is a fun one that starts to touch on the main topic, [statements][3] vs [expressions][4] in C++ and Rust. Let us start with a some examples of what is and is not the comma operator.
 
 ```cpp
-int a = 1, b = 2;                       // nope
-processWidget(a, b);                    // also nope
-processWidget((a, b));                  // yup!
+int a = 1, b = 2;                       // 1. nope
+processWidget(E1, E2);                  // 2. also nope
+processWidget((E1, E2));                // 3. yup!
 
-for(int i = 0, j = 1; i < 10; i++, j++) // no and yes
+for(int i = 0, j = 1; i < 10; i++, j++) // 4. no and yes
     ;
 
 int i, j;
-for(i = 0, j = 1; i < 10; i++, j++)     // yes and yes! (I think)
+for(i = 0, j = 1; i < 10; i++, j++)     // 5. yes and yes! (I think)
     ;
 ```
 
 Let's break these down.
 
-The first one is a [simple declaration statement][5], their words, not mine. Also, I want to take a second to point out how annoyed I was by the fact that in their list of declaration categories, the one for variables was listed last and was called `simple declaration`. It took me far too long to find and I've decided I don't like it (the documentation). Anyways, the commas in that statement are separators in what is called the `init-declarator-list`.
+The first one is a [simple declaration statement][5], their words, not mine. The commas in that statement are separators in what is called the `init-declarator-list`.
 
 The next one is a function call, the commas are part of the function call operator. If we go back to the documentation on that bad boy we can find this extra piece of wisdom.
 
@@ -116,17 +116,17 @@ temporary expression (since C++17). If E2 is a bit-field, the result is a
 bit-field.
 ```
 
-Pay attention to that bit about value category because that's going to come up more later, but for now let's focus on the comma operator, I hope it reminds you of `;` (not an operator). There are two key facts here, first, the entire comma separated series of expressions is itself an expression, whereas a semicolon separated series of expressions is a series of [expression statements][4]. Both `,` and `;` are similar in that they separate series of expressions, the difference is that one does so by turning them into statements, and the other does so by turning them into an expression that evaluates to the value of the last expression. The second important fact is that any expression that is wrapped in parentheses is itself considered to be a [primary expression][4].
+Pay attention to that bit about value category because that's going to come up more later, but for now let's focus on the comma operator, I hope it reminds you of `;` (not an operator). There are two key facts here, first, the entire comma separated series of expressions is itself an expression, whereas a semicolon separated series of expressions is a series of [expression statements][4]. Both `;` and `,` are similar in that they separate series of expressions, the difference is that one does so by turning them into statements, and the other does so by turning them into an expression that evaluates to the value of the last expression. The second important fact is that any expression that is wrapped in parentheses is itself considered to be a [primary expression][4].
 
-So when we say `processWidget((a, b))` it is as if we had said `a; processWidget(b)` (don't quote me on this). In this case `a` does nothing, it's an lvalue identifier to a variable, presumably, and the expression evaluates to itself and the value is discarded, literally less than useless, I hope I didn't mislead you with my example (jk I totally hope I confused you). So you end up with calling `processWidget` with a single argument `b`'s type, so it's not even calling the same function as the previous example, fun. But now that we know that the rest should be easy.
+When we say `processWidget((E1, E2))` it's as if we had said `E1; processWidget(E2)` (don't quote me on this). There are some differences between this and what actually happens around when the destructors from objects created by E1 would get called but dont worry about that. You end up with calling `processWidget` with a single argument `E2`'s type. It's not even calling the same function as the previous example, fun. But now that we know that the rest should be easy.
 
-The for loop statement starts with a declaration statement, followed by a boolean expression, followed by a single expression, but we want to do two things in this part of the for loop, so we use the comma operator to let us sneak two expressions in where one is expected, brilliant! This is also the use case pretty much everyone is familiar with.
+The for loop statement starts with a declaration statement, followed by a boolean expression, followed by a single expression, but we want to do two things in this part of the for loop, so we use the comma operator to let us sneak two expressions in where one is expected. Brilliant! This is also the use case pretty much everyone is familiar with.
 
 The last example is hopefully obvious by now, the declaration is moved outside of the loop, and instead the first section of the for loop contains a comma operator separated list of assignment expressions and the rest is identical to the previous example.
 
 I think it's worth pointing out that you can implement `operator,` for your own types. It's also worth pointing out that there are a ton of ways you can shoot yourself in the foot doing this and that you probably shouldn't ever do it. For more information look [here][7] and then [here][8] and maybe even [here][9].
 
-Another situation where the comma operator sees legitimate use is C++11 constexpr function programming. Which has the constraint that it must only contain a single return statement (and a few other things, but what's important is that things like expression statements aren't allowed), so you can use the comma operator to sequentially execute multiple expressions where only one is expected. You know what else gets used a lot in constexpr programming for C++11? The `conditional operator`! Seriously check out the [examples][6] for the documentation on constexpr, it's chock-full of conditional operator expressions. And, interestingly but unsurprisingly enough, it's used for the exact same reasons that the comma operator is used! Let us explore why~
+Another situation where the comma operator sees legitimate use is C++11 constexpr function programming. Which has the constraint that it must only contain a single return statement (and a few other things, but what's important is that things like expression statements aren't allowed), so you can use the comma operator to sequentially execute multiple expressions where only one is expected. You know what else gets used a lot in constexpr programming for C++11? The `conditional operator`! Seriously check out the [examples][6] for the documentation on constexpr, it's chock-full of conditional operator expressions. And, interestingly but unsurprisingly enough, it's used for the exact same reasons that the comma operator is used! Let us explore why.
 
 ## The Conditional Operator
 
@@ -148,7 +148,7 @@ Anyways, back to the conditional operator. Because the entire thing is an lvalue
 
 ## My Feelings
 
-Long story short I don't feel like these two operators are particularly `C++`-like. To me they feel like aberrations, and I feel as though they were added to fill in holes left behind by how the language's syntax was designed. Now's where I really start talking about Rust. Super short story time, my old boss was a bit of a Functional Programming Evangelist, and as a result I started paying attention to functional programming whenever it came up as a topic though I didn't dig into it. When I first heard about Rust I went and browsed the Wikipedia article about it and thanks to my conditioning from Ian when I came upon the following blurb it burned into my mind for all eternity.
+Long story short I don't feel like the conditional and comma operators are particularly `C++`-like. To me they feel like aberrations, and I feel as though they were added to fill in holes left behind by how the language's syntax was designed. Now's where I really start talking about Rust. Super short story time, my old boss was a bit of a Functional Programming Evangelist, and as a result I started paying attention to functional programming whenever it came up as a topic though I didn't dig into it. When I first heard about Rust I went and browsed the Wikipedia article about it and thanks to my conditioning from Ian when I came upon the following blurb it burned into my mind for all eternity.
 
 ```
 Despite the superficial resemblance to C and C++, the syntax of Rust in a
