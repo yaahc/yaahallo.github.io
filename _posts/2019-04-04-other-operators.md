@@ -11,7 +11,7 @@ It's dangerous to go alone, take this.
 
 - <https://en.cppreference.com/w/cpp/language/operator_other>
 
-Feel free to reference this while you are reading. I think it's a interesting read, but don't worry too much because I include the most relevant sections inline. What follows are a series of _fun_ facts C++'s other operators, how I feel about them, and how they relate to Rust. (_Of course_)
+Feel free to reference this while you are reading. I think it's a interesting read, but don't worry too much because I include the most relevant sections inline. What follows are a series of fun facts C++'s other operators, how I feel about them, and how they relate to Rust.
 
 ## A Story of What's to Come
 
@@ -165,7 +165,7 @@ And compare that to the list of statements in cppreference.
 
 ![statements from cppreference](/assets/somany.png)
 
-Where C++ has compound statements Rust has block expressions. Where C++ has return statements Rust has return expressions. Where C++ has iteration statements Rust has loop expressions. You no doubt see a pattern forming. The only things in Rust that are statements are declarations, things like variables or functions, and expression statements, which are expressions followed by a semicolon. Everything else is an expression. To me it feels like the conditional operator and comma operator in C++ were added only because they had already decided that conditions and blocks were statements, but it turns out that compounding expressions and having conditional expressions is super useful, so they added them in after the fact. Whereas Rust was able to learn from the mistakes of its fore bearers and generalized all of these statements into expressions. The equivalent of `auto d = (a ? b : c);` in Rust is `let d = if a { b } else { c };` and the equivalent of `auto d = (E1, E2, E3);` is `let d = {E1; E2; E3 };`. One difference is that these block and if expressions in Rust are always value expressions, so you can't assign to them without using something like a macro, unlike their C++ counterparts which inherit their value category from the relevant sub expressions and can be assigned to, which is nifty.
+Where C++ has compound statements Rust has block expressions. Where C++ has return statements Rust has return expressions. Where C++ has iteration statements Rust has loop expressions. You no doubt see a pattern forming. The only things in Rust that are statements are declarations, things like variables or functions, and expression statements, which are expressions followed by a semicolon. Everything else is an expression. To me it feels like the conditional operator and comma operator in C++ were added only because they had already decided that conditions and blocks were statements, but it turns out that compounding expressions and having conditional expressions is super useful, so they added them in after the fact. Whereas Rust was able to learn from the mistakes of its forebearers and generalized all of these statements into expressions. The equivalent of `auto d = (a ? b : c);` in Rust is `let d = if a { b } else { c };` and the equivalent of `auto d = (E1, E2, E3);` is `let d = {E1; E2; E3 };`. One difference is that these block and if expressions in Rust are always value expressions, so you can't assign to them without using something like a macro, unlike their C++ counterparts which inherit their value category from the relevant sub expressions and can be assigned to, which is nifty.
 
 I think the reason I find these last two operators so fascinating is that they seem out of place. It's like they're two mercenaries from Functional-Programming-Land who ended up settling down in C++Land. I like them conceptually and I value them for the situations where they're genuinely useful, but I think I'm not alone amongst c++ developers who avoid these operators whenever we can. Not because they're bad, but because they're inconsistent with the rest of the language and they feel arcane. Thats where I think rust benefited from the lessons of the past. It managed to include these useful features into the core syntax, so when you use an if statement in the expression position in rust it doesn't feel out of place, it feels concise, which is exactly what these operators are meant to do for C++.
 
@@ -176,7 +176,6 @@ Quick review of what we covered.
 - value categories (place vs value or lvalue vs rvalue)
 - indepth comparison between statements and expressions
 - the dangers of sequencing and exception safety
-- one small reason I'm in love with Rust
 
 Thank you all for reading, I hope you all enjoyed this as much as I enjoyed writing it.
 
