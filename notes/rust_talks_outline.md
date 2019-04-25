@@ -1,0 +1,19 @@
+- [ ] enums, match, patterns
+  - Results and Options
+- [ ] Explictness
+  - ? operator
+  - consistent naming schemes, macros, CONSTANTS, function_names, StructNames, etc
+  - & borrow syntax (elided lifetimes)
+- [ ] Sane Defaults
+  - move vs copy vs clone
+  - const vs mut
+- [ ] Tools
+  - Tests
+  - Docs
+  - Doctests
+- [ ] macros
+  - derives
+  - macro_rules!
+  - proc_macros
+    - structopt
+    - serde
