@@ -40,3 +40,8 @@ plugins:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+# Site-wide configuration for reveal.js presentations. Feel free to edit these if you wish
+reveal_path: /reveal.js/
+reveal_theme_path: /reveal.js/css/theme/
+reveal_theme: night
+reveal_transition: convex
