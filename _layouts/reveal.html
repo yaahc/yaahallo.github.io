@@ -50,7 +50,7 @@
           { src: '{{ site.reveal_path }}plugin/markdown/markdown.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
 
           // highlighting
-          { src: '{{ site.reveal_path }}plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightOnLoad(); } },
+          { src: '{{ site.reveal_path }}plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
 
           // zoom
           { src: '{{ site.reveal_path }}plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
