@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{ site.reveal_theme_path}}{{ site.reveal_theme }}.css" id="theme">
 
     <!-- For syntax highlighting -->
-    <link rel="stylsheet" href="{{ site.reveal_path }}lib/css/zenburn.css">
+    <!-- <link rel="stylsheet" href="{{ site.reveal_path }}lib/css/zenburn.css"> -->
 
     <!-- [if lt IE 9]>
       <script src="{{ site.reveal_path }}lib/js/html5shiv.js"></script>
@@ -24,7 +24,7 @@
   <body>
     <div class="reveal">
       <div class="slides">
-        {{ content }}
+            {{ content }}
       </div>
     </div>
 
@@ -46,11 +46,11 @@
           { src: '{{ site.reveal_path }}lib/js/classList.js', condition: function() { return !document.body.classList; } },
 
           // markdown
-          { src: '{{ site.reveal_path }}plugin/markdown/marked.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
-          { src: '{{ site.reveal_path }}plugin/markdown/markdown.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+          <!-- { src: '{{ site.reveal_path }}plugin/markdown/marked.js', condition: function() { return !!document.querySelector('[data-markdown]'); } }, -->
+          <!-- { src: '{{ site.reveal_path }}plugin/markdown/markdown.js', condition: function() { return !!document.querySelector('[data-markdown]'); } }, -->
 
           // highlighting
-          { src: '{{ site.reveal_path }}plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: '{{ site.reveal_path }}plugin/highlight/highlight.js', async: true },
 
           // zoom
           { src: '{{ site.reveal_path }}plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
