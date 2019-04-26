@@ -1,7 +1,5 @@
 module Jekyll
-    
     class RenderFragment < Liquid::Tag
-    
         def render(context)
             "<!-- .element: class=\"fragment\" -->"
         end
