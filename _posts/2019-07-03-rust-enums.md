@@ -148,6 +148,8 @@ void foo(ExampleEnum bar) {
 - Nullable values <!-- .element: class="fragment" -->
 - Exceptions <!-- .element: class="fragment" -->
 - Copy on Write types <!-- .element: class="fragment" -->
+- Abstract Syntax Trees <!-- .element: class="fragment" -->
+- Linked List <!-- .element: class="fragment" -->
 - Much much more <!-- .element: class="fragment" -->
 
 --
@@ -190,6 +192,49 @@ pub enum Cow<'a, B: ?Sized + 'a>
     Owned(<B as ToOwned\>::Owned),
 }
 ```
+
+--
+
+# AST - json objects
+
+```rust
+enum Value {
+    Null,
+    Bool(bool),
+    Number(Number),
+    String(String),
+    Array(Vec<Value>),
+    Object(Map<String, Value>),
+}
+```
+
+--
+
+# Singly Linked list
+
+```rust
+pub struct List {
+    head: Link,
+}
+
+enum Link {
+    Empty,
+    More(Box<Node>),
+}
+
+struct Node {
+    elem: i32,
+    next: Link,
+}
+```
+
+--
+
+# Much much more
+
+- State machines with state associated data
+- Async / Await
+- Subcommand Args/configuration (scbuild)
 
 ---
 
