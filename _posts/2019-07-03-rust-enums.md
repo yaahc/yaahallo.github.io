@@ -1,6 +1,6 @@
 ---
 layout: slides
-title: "Rust Doesnt Suck: Enums"
+title: "Lessons From Rust: Enums"
 date: 2019-07-03 12:58
 categories: rust enums ADT tagged-unions
 ---
