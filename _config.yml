@@ -19,8 +19,8 @@ description: >- # this means to ignore newlines until "baseurl:"
   Poorly written blog posts chronicling my attempts to learn new things.
 baseurl: "/" # the subpath of your site, e.g. /blog
 url: "https://yaah.dev" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: Yaahster
-github_username:  yaahallo
+twitter_username: yaahc_
+github_username:  yaahc
 permalink: /:title
 
 # Build settings
