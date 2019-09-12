@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Rustaceans! We can help!"
-date: 2019-08-26 22:49
+date: 2019-09-12 13:40
 categories: rust rustlang open source software
 marp: false
 ---
@@ -38,13 +38,13 @@ Then along comes TWIR, just waving the flag of friendship weekly. "Heres somethi
 
 ## 2.1. First Contributions
 
-So I got involved, I did a couple of minor issues on rustc, and all of a sudden the problem space wasn't so scary and I started feeling motivated to look for issues on my own. I started trying to find my own new issues to work on from the issue boards, which unfortunately is where I ran into my first few snags.
+So I got involved, I did a minor issue on [rustc](https://github.com/rust-lang/rust/pull/50793), and all of a sudden the problem space wasn't so scary and I started feeling motivated to look for issues on my own. I started trying to find my own new issues to work on from the issue boards, which unfortunately is where I ran into my first few snags.
 
 As it turns out, those issue boards can be very difficult to navigate, https://www.rustaceans.org/findwork/starters, the recommended starting point in TWIR at the time, was particularly hard to work with. It only shows the issue name, summary, and tags. I would go into issue after issue only to find someone else was already working on it. The friction was discouraging, so I switched to only using the github issues lists themselves.
 
 The next issue I ran into was maintainer responsiveness. Now I don't want to complain here because I think the Rust lang contributors are fantastic people who do great work for little thanks and no pay and I don't think it's appropriate to expect work from them. But... some of the project maintainers were a rather slow to respond to new comments on issues.
 
-I remember very shyly leaving comments like "I'd like to take on this feature" and waiting a day or two for a response and getting nothing then quietly deleting my comment and moving on to find a new issue. I ended up settling on doing lots of work in rustfix and clippy, because the maintainers there were particularly responsive, friendly, and personable. Shoutout to [@killercup](https://twitter.com/killercup), [@ManishEarth](https://twitter.com/ManishEarth), [@oli_obk](https://twitter.com/oli_obk), [@phansch](https://twitter.com/philhansch), and [@flip1995](https://github.com/flip1995) for making it so easy to get involved and contribute to your projects.
+I remember very shyly leaving comments like "I'd like to take on this feature" and waiting a day or two for a response and getting nothing then quietly deleting my comment and moving on to find a new issue. I ended up settling on doing lots of work in rustfix and clippy, because the maintainers there were particularly responsive, friendly, and personable. Shoutout to [@killercup](https://twitter.com/killercup), [@ManishEarth](https://twitter.com/ManishEarth), [@oli_obk](https://twitter.com/oli_obk), [@phansch](https://twitter.com/philhansch), [@kennytm](https://github.com/kennytm), [@flip1995](https://github.com/flip1995), [@ehuss](https://github.com/ehuss), and everyone I'm forgetting for making it so easy to get involved and contribute to your projects.
 
 # 3. Meetups: Making Rust Friends
 
@@ -86,7 +86,7 @@ Now, I've been an avid Redditor for a solid 10 years, and it has been a great wa
 
 Now the last thing is something that hasn't fully played itself out, but I expect it will be a major turning point as well. Giving talks! I've never given one other than at work in front of engineers I know personally, and I probably would have continued in that pattern for ages if it wasn't for J Haigh. Manish had been trying to convince me to give a "contribution tour" talk at one of the meetups for a while, and I was interested but I didn't feel ready yet, probably imposter syndrome or some nonsense like that. Then along comes J and they're like, "Hey I see you're active in the Rust OSS community, would you be interested in talking about any of it? COGoldRust currently has a cfp open". Now, I was interested, terrified, but interested. I told them about Manish's idea for a contribution tour and my apprehensions and feelings of being under qualified but they were nothing but encouraging, they helped helped me get over my feelings of imposter syndrome, made the cfp process seem much more approachable, and generally put a friendly face on the COGoldRust conference.
 
-So I said yes, I'm interested, I'll do my best, and proceeded to procrastinate like crazy. But that did not stop J! They came back and gently encouraged me to keep working on my submission more and helped me motivate when I probably wouldn't have been able to alone. I expect I would have let the deadline pass and beat myself up over it if they hadn't been so encouraging and helpful. I ended up throwing together a vague outline of the current talk, about how I learned Rust, what I contributed to, and what I learned in the process, which evolved into this current talk about how to effectively participate in the open source community.
+So I said yes, I'm interested, I'll do my best, and I then promptly proceeded to procrastinate. But that did not stop J! They came back and gently encouraged me to keep working on my submission more and helped me motivate when I probably wouldn't have been able to alone. I expect I would have let the deadline pass and beat myself up over it if they hadn't been so encouraging and helpful. I ended up throwing together a vague outline of the current talk, about how I learned Rust, what I contributed to, and what I learned in the process, which evolved into this current talk about how to effectively participate in the open source community.
 
 I don't really know what will end up happening as a result of being a speaker, but I'll make sure to write a follow up blog in a few months to let yall know! Either way though J's friendliness and encouragement is the main reason I'm here currently. If there are any take aways here it is to be like J and go out of your way to find qualified speakers and encourage them to take the leap. That could be the thing that helps them finally take the step they've always wanted to take.
 
@@ -103,4 +103,8 @@ I don't really know what will end up happening as a result of being a speaker, b
         - Always open an issue when you have an idea of something that you want to work on or see done
         - Save a link to the issue somewhere, I'm using a random [github project](https://github.com/yaahc/prs/projects/1) board for this.
 - Twitter helped immensely with getting to know other Rust community members at a personal level that Reddit doesn't provide
-- Direct encouragement to submit a talk is the only reason I'm even here giving this talk
+- Reach out to people, it makes a huge difference.
+
+# Bonus: Shameless Plug
+
+So I want to take this opportunity to share a project that was inspired by the mentorship I've received from Manish, [awesome-rust-mentors](https://github.com/RustBeginners/awesome-rust-mentors). If you're familiar with `awesome-rust` or `awesome-vim` or any other such currated awesome list you probably already know what this is. It's a list of rustaceans who are interested in helping new contributors get involved and navigate the community, basically a bunch of Manishes. On it you'll find people's names, contact info, preferred pronouns, spoken languages, and topics of interest. If you're interested in getting a mentor or being a mentor you should definitely go check it out.
