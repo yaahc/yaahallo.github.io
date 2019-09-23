@@ -10,7 +10,7 @@ marp: false
 
 ## DISCLAIMER
 
-**This blog post is the textual version of the talk it was written to prepare for ([video](https://www.youtube.com/watch?v=QKbdBwjra5o)). The content should be essentially the same, though with less stumblinb over my own words, less silly hand gestures, and less crying. Please Enjoy.**
+**This blog post is the textual version of the talk it was written to prepare for ([video](https://www.youtube.com/watch?v=QKbdBwjra5o)). The content should be essentially the same, though with less stumbling over my own words, less silly hand gestures, and less crying. Please Enjoy.**
 
 ## Preface: Expectations
 
