@@ -10,7 +10,7 @@ marp: false
 
 ## DISCLAIMER
 
-**The canonical version of this blog is the talk([video](https://www.youtube.com/watch?v=QKbdBwjra5o)). This was originally written to prepare for the talk and give the story a shape and structure before I broke it up into slides. The content is mostly the same, though you don't get to see me getting all emotional in this blog form. I've done my best to annotate it to feel the same as the talk. Please Enjoy.**
+**This blog post is the textual version of the talk it was written to prepare for ([video](https://www.youtube.com/watch?v=QKbdBwjra5o)). The content should be essentially the same, though with less stumblinb over my own words, less silly hand gestures, and less crying. Please Enjoy.**
 
 ## Preface: Expectations
 
@@ -26,15 +26,15 @@ So what did rust do differently that actually got me involved where other commun
 
 # 1. Code of Conduct
 
-One of the first things I saw when I looked into Rust was its Code of Conduct. Now let me give you a little extra background about myself, I'm a woman, I,m gay, and I'm transgender. When I go looking at participating in a community misogyny, transphobia, and homophobia are all things I worry about.
+One of the first things I saw when I looked into Rust was its Code of Conduct. Now let me give you a little extra background about myself, I'm a woman, I'm gay, and I'm transgender. When I go looking at participating in a community misogyny, transphobia, and homophobia are all things I worry about.
 
-So when I looked at the Rust community's code of conduct and how it banned discrimination on the basis of gender, race, ethnicity, age, disability, etc, it was like a huge weight had lifted off my back. It's wonderful to be able to go into a community and know that if you run into a bigot that pretty much everyone has got your back. I didn't feel afraid to get involved because the code of conduct gave me a sense of safety. Thankfully I've not had any problems in the last 2 years, and I'm convinced it's because the CoC as well. The code of conduct acts as preventative medicine and discourages the people its designed to protect against from ever joining your community in the first place. If you want people like me to get involved in your projects just mentioning that you abide by the Rust community's code of conduct goes a huge way to making us feel comfortable enough to engage.
+So when I looked at the Rust community's code of conduct and how it banned discrimination on the basis of gender, race, ethnicity, age, disability, and other similar attributes, it was like a huge weight had lifted off my shoulders. It's wonderful to be able to go into a community and know that if you run into a bigot that pretty much everyone has got your back. I didn't feel afraid to get involved because the code of conduct gave me a sense of safety. Thankfully I've not had any problems in the last 2 years, and I'm convinced it's because the CoC as well. The code of conduct acts as preventative medicine and discourages the people its designed to protect against from ever joining your community in the first place. If you want people like me to get involved in your projects just mentioning that you abide by the Rust community's code of conduct goes a huge way to making us feel comfortable enough to engage.
 
 So the code of conduct got me excited about rust, but it's not what got me engaged. What was it that actually got me to do my first open source contribution.
 
 # 2. This Week In Rust
 
-Incase you haven't heard of it, the Rust community maintains a weekly newsletter of Rustlang news called [`This Week In Rust`](https://this-week-in-rust.org/). In it you'll find sections on recent blog posts, the crate of the week, call for participation, changes merged to core, upcoming meetups, job postings, and usually a funny little quote at the end.
+Incase you haven't heard of it, the Rust community maintains a weekly newsletter of Rustlang news called [This Week In Rust](https://this-week-in-rust.org/). In it you'll find sections on recent blog posts, the crate of the week, call for participation, changes merged to core, upcoming meetups, job postings, and usually a funny little quote at the end.
 
 I came to TWIR because of the blog posts, I was obsessed with rust and wanted to absorb every bit of information about it that I could, but the section that ended up having the greatest impact was the Call for Participation section.
 
