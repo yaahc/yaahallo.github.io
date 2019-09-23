@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Navigating and Navigatoring Open Source Communities (And Rust's In Particular)"
+title: "Navigating The Rust OSS Community"
 date: 2019-09-12 13:40
 categories: rust rustlang open source software
 marp: false
