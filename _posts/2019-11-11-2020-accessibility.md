@@ -58,7 +58,7 @@ do to keep working on accessibility.
   use.
 * Work on accessibility for our webpages and localization so other natural
   language speakers can get involved at the same level as english speakers.
-* This about mentoring people or getting a mentor.
+* Think about mentoring people or getting a mentor.
     * Insert Shameless Plug of [awesome-rust-mentors](https://rustbeginners.github.io/awesome-rust-mentors/)
 * And many more ideas that I'm sure other wonderful Rustaeceans will come up with.
     * Seriously though, if you have any more ideas on accessibility please @ me
