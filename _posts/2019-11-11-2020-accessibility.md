@@ -61,6 +61,8 @@ do to keep working on accessibility.
 * This about mentoring people or getting a mentor.
     * Insert Shameless Plug of [awesome-rust-mentors](https://rustbeginners.github.io/awesome-rust-mentors/)
 * And many more ideas that I'm sure other wonderful Rustaeceans will come up with.
+    * Seriously though, if you have any more ideas on accessibility please @ me
+      on twitter and tell me, I'll add your ideas to this list.
 
 I want nothing more than to see rust continue to grow and continue to be the
 amazing lang/community it is today, and I think the key to this is a continuing
