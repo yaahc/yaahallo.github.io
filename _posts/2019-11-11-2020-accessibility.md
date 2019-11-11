@@ -68,6 +68,7 @@ do to keep working on accessibility.
 * [From [@Sunjay03](https://twitter.com/Sunjay03)] Contribute to other projects to help them be more
   accessible, rather than putting all the burden on the maintainer.
 * [From [@timClicks](https://twitter.com/timClicks)] Prefer shorter sentences in blog posts about Rust. Many (majority?) of the community use English as a second language. Shorter sentences are much easier to translate.
+* [From [@TheWholeDavid](https://twitter.com/TheWholeDavid)] Engage with the dyslexic community on new language features and syntax, library API names, etc. Dyslexic people, for the most part, make the same mistakes when reading things that everyone does at least occasionally, but the difference is we make them almost every time.
 
 I want nothing more than to see rust continue to grow and continue to be the
 amazing lang/community it is today, and I think the key to this is a continuing
