@@ -52,6 +52,7 @@ do to keep working on accessibility.
 * Write tutorials and docs that help people use your projects/tools/libraries
   so that more people can jump in and use / contribute.
     * I recommend watching [this wonderful talk by Meike Baumgärtner when the video comes out](https://llvmdevmtg2019.sched.com/event/W2zN/llvm-tutorials-how-to-write-beginner-friendly-inclusive-tutorials).
+    * [From [@imperioworld_](https://twitter.com/imperioworld_)] a very nice thing to have is always providing as much information as possible on how to use your crate. That goes through writing documentation for every items with code examples (I insist on this one)
 * Write blog posts so people know what you're working on and can get excited
   about it.
 * Focus not just on adding new features, but on making those features easy to
