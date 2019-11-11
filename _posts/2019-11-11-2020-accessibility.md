@@ -6,8 +6,6 @@ categories: rust rustlang open source software accessibility 2020 blog
 marp: false
 ---
 
-# Rust 2020: Accessibility
-
 For a while I didn't really feel a need to write a blog post for 2020. As far
 as I can tell we the Rust Community are doing a great job, and I just want us
 to keep doing what we've been doing. My biggest worry is that the people who
