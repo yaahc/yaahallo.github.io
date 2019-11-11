@@ -67,6 +67,7 @@ do to keep working on accessibility.
 * [From [@Sunjay03](https://twitter.com/Sunjay03)] Add a code of conduct to your project, [heres why.](https://help.github.com/en/github/building-a-strong-community/adding-a-code-of-conduct-to-your-project)
 * [From [@Sunjay03](https://twitter.com/Sunjay03)] Contribute to other projects to help them be more
   accessible, rather than putting all the burden on the maintainer.
+* [From [@timClicks](https://twitter.com/timClicks)] Prefer shorter sentences in blog posts about Rust. Many (majority?) of the community use English as a second language. Shorter sentences are much easier to translate.
 
 I want nothing more than to see rust continue to grow and continue to be the
 amazing lang/community it is today, and I think the key to this is a continuing
