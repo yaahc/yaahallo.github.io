@@ -63,6 +63,7 @@ do to keep working on accessibility.
 * And many more ideas that I'm sure other wonderful Rustaeceans will come up with.
     * Seriously though, if you have any more ideas on accessibility please @ me
       on twitter and tell me, I'll add your ideas to this list.
+* [From @Sunjay03] Add a code of conduct to your project, [heres why.](https://help.github.com/en/github/building-a-strong-community/adding-a-code-of-conduct-to-your-project)
 
 I want nothing more than to see rust continue to grow and continue to be the
 amazing lang/community it is today, and I think the key to this is a continuing
