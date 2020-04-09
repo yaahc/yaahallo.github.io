@@ -121,9 +121,65 @@ fn foo() -> impl Future<Output = i32> async {
 }
 ```
 
-The final step would be to create a `try fn` to mirror the current `async fn`
-syntax. This would complete the effect system and make try and async effects
-completely symmetrical which makes them both easier to reason about.
+`async` and `try` blocks essentially end up becoming `do` notation for their
+respective monads. It remains to be seen whether or not any of this can
+actually parse successfully.
+
+Theres no reason to restrict this to only function body blocks:
+
+```rust
+let _: Result<T, E> = if s.is_empty() try { ... };
+
+let _ = || try { .. };
+
+let c = loop async {
+    ...
+}.await;
+```
+
+And, if we wanted to, we could apply this generalization to other forms of
+blocks, other than `async` and `try`, like `if`, `match`, `for`, and `while`
+expression blocks.
+
+```rust
+fn foo(bar: Bar) -> Baz match bar {
+    Bar::Quix(q) => ...,
+    ...
+}
+
+for match in bars {
+    Bar::Quix(q) => ...,
+    ...
+}
+```
+
+In addition to this, rust is moving away from having `unsafe fn`s default to
+having an [unsafe body block](https://github.com/rust-lang/rfcs/pull/2585), so
+this could go hand in hand with that change.
+
+```rust
+// body is safe by default
+unsafe fn foo() {
+    ...
+}
+
+// unsafe body after above rfc
+unsafe fn foo() {
+    unsafe {
+        ...
+    }
+}
+
+// unsafe body with generalized block effects
+unsafe fn foo() unsafe {
+    ...
+}
+```
+
+This leaves room for discussions over whether or not there should be a `try`
+effect equivalent to `async fn` where the function definition itself also
+exists within the monad, similar to the original `throw` proposals, completing
+the symmetric effect system..
 
 ## Conclusion
 
