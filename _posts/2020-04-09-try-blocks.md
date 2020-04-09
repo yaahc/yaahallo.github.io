@@ -76,9 +76,9 @@ is what I'd like to expand upon.
 ## The Theoretical Plan
 
 To start we gotta stabilize try blocks, this is already in progress. There's
-not much to add on this point other than bikeshedding keywords like `raise` vs
-`fail` vs `throw` for the keyword to return errors within the try block, which
-is not the point of this post.
+not much to add on this point other than bikeshedding keywords like `raise`,
+`fail`, `throw`, or `yeet` for the keyword to return errors within the try
+block, which is not the point of this post.
 
 Once we have try blocks though I imagine I'm not going to love having to put
 `try { }` around the full body of every function that returns a Result, given
