@@ -72,7 +72,7 @@ The idea is that `async {}` and `await` cancel eachother out, and the same is
 true for `try {}` and `?`. This symmetry is particularly appealing to me, and
 is what I'd like to expand upon.
 
-## The Theoretical Plan
+## What I'd Like to See Next
 
 To start we gotta stabilize try blocks, this is already in progress. There's
 not much to add on this point other than bikeshedding keywords like `raise`,
