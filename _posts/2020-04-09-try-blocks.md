@@ -5,7 +5,7 @@ date: 2020-04-09
 categories: rust try block trait
 ---
 
-# Introduction
+## Introduction
 
 For the last few days the rust community has been abuzz with renewed
 discussions about `try` syntax in response to a series of blog
@@ -125,7 +125,7 @@ The final step would be to create a `try fn` to mirror the current `async fn`
 syntax. This would complete the effect system and make try and async effects
 completely symmetrical which makes them both easier to reason about.
 
-# Conclusion
+## Conclusion
 
 With all three of these proposals you would be able pick and choose how you
 want to handle fallibility. A single keyword enables the effect, and you have a
