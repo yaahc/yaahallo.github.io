@@ -8,10 +8,9 @@ categories: rust try block trait
 # Introduction
 
 For the last few days the rust community has been abuzz with renewed
-discussions about `try` syntax in response to a series of blog posts
-[1](https://boats.gitlab.io/blog/post/failure-to-fehler/)
-[2](https://boats.gitlab.io/blog/post/why-ok-wrapping/) by
-[@withoutboats](https://twitter.com/withoutboats). This has triggered some
+discussions about `try` syntax in response to a series of blog
+posts([[1]](https://boats.gitlab.io/blog/post/failure-to-fehler/)[[2]](https://boats.gitlab.io/blog/post/why-ok-wrapping/))
+by [@withoutboats](https://twitter.com/withoutboats). This has triggered some
 fairly intense bikeshedding and vitriolic objections and, it seems, some
 progress!
 
