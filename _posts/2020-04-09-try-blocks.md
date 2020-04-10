@@ -52,7 +52,7 @@ fn foo() -> PathBuf throws io::Error {
 
 Ok-wrapping and try functions are often bundled together in proposals about
 either, but this doesnt have to be the case. In fact, on nightly rust it's been
-possible to enable Ok-wrapping with try _blocks_ for a while. You can go on
+possible to enable try _blocks_ (with Ok-wrapping) for a while. You can go on
 [nightly right
 now](https://play.rust-lang.org/?version=nightly&mode=debug&edition=2018&gist=347d8f346dff1fc29273aa436421ea3c)
 and write the previous example like this:
