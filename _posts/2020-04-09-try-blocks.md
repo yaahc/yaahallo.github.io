@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Try Blocks And Functions"
+title: "Symme(try blocks)"
 date: 2020-04-09
 categories: rust try block trait
 ---
@@ -147,10 +147,15 @@ fn foo(bar: Bar) -> Baz match bar {
     ...
 }
 
-for match in bars {
+for bar in bars match bar {
     Bar::Quix(q) => ...,
     ...
 }
+
+if is_empty loop {
+};
+
+// these examples could go on for QUITE a while...
 ```
 
 In addition to this, rust is moving away from having `unsafe fn`s default to
@@ -179,7 +184,7 @@ unsafe fn foo() unsafe {
 This leaves room for discussions over whether or not there should be a `try`
 effect equivalent to `async fn` where the function definition itself also
 exists within the monad, similar to the original `throw` proposals, completing
-the symmetric effect system..
+the symmetry.
 
 ## Conclusion
 
