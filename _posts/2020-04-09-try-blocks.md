@@ -17,10 +17,10 @@ progress!
 As of yesterday the lang team is moving forward with a
 [proposal](https://github.com/rust-lang/rust/issues/70941) to resolve issues
 with `try` blocks, and presumably, begin stabilizing them. It seems that the
-majority is in favor of the proposal, where as historically this has been
-blocked on disagreements about ok-wrapping. So what changed? Two things, first,
-it became apparent that try blocks and ok wrapping could be separated from
-proposals for try functions and `throws` syntax. And second, [a
+lang team is arriving at consensus to merge try blocks, where as historically
+this has been blocked on disagreements about ok-wrapping. So what changed? Two
+things, first, it became apparent that try blocks and ok wrapping could be
+separated from proposals for try functions and `throws` syntax. And second, [a
 comment](https://www.reddit.com/r/rust/comments/fw4jsx/from_failure_to_fehler/fmmtt7o/)
 on reddit compellingly compared try and async blocks as similar effect systems.
 
