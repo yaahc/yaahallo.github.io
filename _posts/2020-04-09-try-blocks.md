@@ -68,10 +68,10 @@ fn foo() -> Result<PathBuf, io::Error> {
 }
 ```
 
-It turns out, when you mentally seperate the two propsals, as the lang team
-did, many of the people objecting to ok-wrapping realize what they _really_
-objected to were try functions. It's not the syntax sugar of wrapping returns
-that blocked the try block proposal, it was the idea that this would lead
+It turns out that separating the two proposals from each other allowed the
+language team to come to consensus on try blocks and narrow the disagreements
+to just function-level try. It's not the syntax sugar of wrapping returns that
+blocked the try block proposal, it was the idea that this would lead
 immediately to Result being stripped from the return type. And, when you dig
 deeper into ok-wrapping as a block level effect, it starts to lead to some
 attractive symmetry in the language.
@@ -143,11 +143,11 @@ fn foo() -> impl Future<Output = i32> async {
 }
 ```
 
-`async` and `try` become block effects and act like `do` notation for their
-respective monads. We could stop here, and only allow block effects in places
-where you couldnt already put an expression, function body blocks and bare
-blocks. Or we can go for maximum consistency and allow block effects in any
-expression with a block:
+In this version of rust `async` and `try` would effectively become block
+effects and act like `do` notation for their respective monads. Now, we could
+stop here, and only allow block effects in places where you couldnt already put
+an expression, function body blocks and bare blocks. Or we can go for maximum
+consistency and allow block effects in any expression with a block:
 
 ```rust
 let d = if s.is_empty() try {
@@ -170,29 +170,10 @@ let c = loop try {
 }?;
 ```
 
-Or even treat expressions like `if`, `match` and `loop` as block effects as well:
-
-```
-
-fn foo(bar: Bar) -> Baz match bar {
-    Bar::Quix(q) => ...,
-    ...
-}
-
-for bar in bars match bar {
-    Bar::Quix(q) => ...,
-    ...
-}
-
-if is_empty loop try {
-};
-
-// these examples could go on for QUITE a while...
-```
-
-In addition to this, rust is moving away from unsafe functions having an
-[unsafe body block](https://github.com/rust-lang/rfcs/pull/2585) by default,
-and this generalization could go hand in hand with that change.
+We could do the same thing with unsafe, and treat it like a block effect. Fun
+fact, rust is currently moving away from unsafe functions having an [unsafe
+body block](https://github.com/rust-lang/rfcs/pull/2585) by default, and this
+generalization could go hand in hand with that change.
 
 ```rust
 // with new rfc body is safe by default
@@ -211,6 +192,26 @@ unsafe fn foo() {
 unsafe fn foo() unsafe {
     ...
 }
+```
+
+Or even treat expressions like `if`, `match` and `loop` as block effects as well:
+
+```
+
+fn foo(bar: Bar) -> Baz match bar {
+    Bar::Quix(q) => ...,
+    ...
+}
+
+for bar in bars match bar {
+    Bar::Quix(q) => ...,
+    ...
+}
+
+if is_empty loop try {
+};
+
+// these examples could go on for QUITE a while...
 ```
 
 We treat the keywords in `fn`, `if`, `match`, `loop`, `async`, `unsafe`, and
