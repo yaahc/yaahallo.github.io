@@ -102,10 +102,11 @@ block. And I dont want to get into that, it is not the point of this post.
 
 However, once we have try blocks I imagine I'm not going to love having to put
 a try block and indent level around the full body of every function that
-returns a Result. To deal with this I would like to add support for annotating
-the function body block itself with `try`. With this change the above example
-becomes:
-
+returns a Result. To deal with this I would like propose adding support for
+annotating the function body block itself with `try`. This is distinct from
+function level try, which to me is the try equivalent of `async fn`, and
+would be written as `try fn`. Also, these proposals are not mutually exclusive.
+With this change the above example becomes:
 
 ```rust
 fn foo() -> Result<PathBuf, io::Error> try {
@@ -114,13 +115,11 @@ fn foo() -> Result<PathBuf, io::Error> try {
 }
 ```
 
-With this change we already get one of the major benefits of withoutboats'
-proposal, we don't have to edit every return location to wrap it with a result
-when we introduce an error return channel. However the Result is still visible,
-and you can think of the function definition as outside the "result monad" or
-"try effect" while the function body block is inside. This way, if you want to
-keep Ok wrapping your returns you can just leave off the try and carry on as
-you always have.
+Now we already get one of the major benefits of withoutboats' proposal, we
+don't have to edit every return location to wrap it with a result when we
+introduce an error return channel. However the Result is still visible, and you
+can think of the function definition as outside the "result monad" or "try
+effect" while the function body block is inside.
 
 Going back to the comparison for async, I don't see why we couldn't extend this
 change to also apply to `async` blocks. I can't think of any particular reasons
