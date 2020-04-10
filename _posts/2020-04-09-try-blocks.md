@@ -134,9 +134,11 @@ fn foo() -> impl Future<Output = i32> async {
 }
 ```
 
-`async` and `try` blocks essentially end up becoming `do` notation for their
-respective monads, and we can take this further. Theres no reason to restrict
-this to only function body blocks:
+`async` and `try` become block effects and act like `do` notation for their
+respective monads. We could stop here, and only allow block effects in places
+where you couldnt already put an expression, function body blocks and bare
+blocks. Or we can go for maximum consistency and allow block effects in any
+expression with a block:
 
 ```rust
 let d = if s.is_empty() try {
@@ -159,11 +161,10 @@ let c = loop try {
 }?;
 ```
 
-And, if we wanted to, we could even apply this generalization to other forms of
-blocks, other than `async` and `try`, like `if`, `match`, `for`, and `while`
-expression blocks.
+Or even treat expressions like `if`, `match` and `loop` as block effects as well:
 
-```rust
+```
+
 fn foo(bar: Bar) -> Baz match bar {
     Bar::Quix(q) => ...,
     ...
@@ -204,9 +205,10 @@ unsafe fn foo() unsafe {
 ```
 
 We treat the keywords in `fn`, `if`, `match`, `loop`, `async`, `unsafe`, and
-`try` defined by "a keyword and a block" as composable effects applied to
-blocks. This lets us concisely and intuitively compose types via syntax sugar.
-And the nice thing about this symmetry is that it helps neutralize a lot of
+`try`  as composable effects applied to blocks. This lets us concisely and
+intuitively compose types and control-flow via syntax sugar.
+
+The nice thing about this symmetry is that it helps neutralize a lot of
 people’s concerns around rust getting “too big”. We’re not making it bigger,
 we’re making it more consistent!
 
@@ -219,9 +221,8 @@ this generalization is worth digging into.
 
 ## Conclusion
 
-With all three of these steps you would be able pick and choose how you
-want to handle control flow with Try types. A single keyword enables the
-effect, and you have a slew of scopes at which you can enable the effect. The
-similarity between async effects and try effects would make both of them easier
-to teach. Once you're familiar with one of the effects the other should come
-intuitively.
+With all three of these steps you would be able pick and choose how you want to
+handle control flow with Try types. A single keyword enables the effect, and
+you have a slew of scopes at which you can apply it. The similarity between
+async effects and try effects would make both of them easier to teach. Once
+you're familiar with one of the effects the other should come intuitively.
