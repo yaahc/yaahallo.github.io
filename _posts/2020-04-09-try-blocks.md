@@ -174,8 +174,8 @@ if is_empty loop {
 // these examples could go on for QUITE a while...
 ```
 
-In addition to this, rust is moving away from having `unsafe fn`s default to
-having an [unsafe body block](https://github.com/rust-lang/rfcs/pull/2585), so
+In addition to this, rust is moving away from having unsafe functions having an
+[unsafe body block](https://github.com/rust-lang/rfcs/pull/2585) by default, so
 this could go hand in hand with that change.
 
 ```rust
@@ -197,17 +197,22 @@ unsafe fn foo() unsafe {
 }
 ```
 
-This leaves room for discussions over whether or not there should be a `try`
-effect equivalent to `async fn` where the function definition itself also
-exists within the monad, similar to the original `throw` proposals, completing
-the symmetry. It remains to be seen whether or not any of this can actually
-parse successfully but I hope others agree with me that it's worth digging
-into.
+If we treat blocks attached to items like `fn`, `if`, `match` and `loop` as
+interchangeable with keyword blocks like `async`, `unsafe`, and `try` we
+can intuitively use them in any combination.
+
+This leaves room for discussions over whether or not there should also be a
+`try` effect equivalent to `async fn`, where the function definition itself
+also exists within the monad, similar to the original `throws function`
+proposals. Also, it remains to be seen whether or not any of this can actually
+parse successfully but I hope others agree with me that this is all worth
+digging into.
 
 ## Conclusion
 
 With all three of these proposals you would be able pick and choose how you
-want to handle fallibility. A single keyword enables the effect, and you have a
-slew of scopes at which you can enable the effect. The similarity between async
-effects and try effects would make both of them easier to teach. Once you're
-familiar with one of the effects the other should come intuitively.
+want to handle control flow with Try types. A single keyword enables the
+effect, and you have a slew of scopes at which you can enable the effect. The
+similarity between async effects and try effects would make both of them easier
+to teach. Once you're familiar with one of the effects the other should come
+intuitively.
