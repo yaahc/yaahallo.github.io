@@ -27,7 +27,7 @@ on reddit compellingly compared try and async blocks as similar effect systems.
 ## Background
 
 Currently, fallibility in rust is expressed with the Result enum. This works
-like any other enum, in that you have to construct a variant manually, with
+like any other enum, in that you have to construct each variant manually, with
 results this is known as Ok-wrapping.
 
 ```rust
@@ -52,7 +52,7 @@ fn foo() -> PathBuf throws io::Error {
 
 Ok-wrapping and try functions are often bundled together in proposals about
 either, but this doesnt have to be the case. In fact, on nightly rust it's been
-possible to enable Ok-wrapping with try blocks for a while. You can go on
+possible to enable Ok-wrapping with try _blocks_ for a while. You can go on
 [nightly right
 now](https://play.rust-lang.org/?version=nightly&mode=debug&edition=2018&gist=347d8f346dff1fc29273aa436421ea3c)
 and write the previous example like this:
@@ -89,7 +89,9 @@ async { x.await } == x == (async{ x }).await
 ```
 
 The idea is that `async {}` and `await` cancel eachother out, and the same is
-true for `try {}` and `?`.
+true for `try {}` and `?`. When framed this way you can start to see `try` and
+`async` as effects applied to blocks, rather than seeing them as just `try
+blocks` or `async blocks`.
 
 ## What I'd Like to See Next
 
