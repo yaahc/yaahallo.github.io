@@ -114,7 +114,7 @@ fn foo() -> Result<PathBuf, io::Error> try {
 }
 ```
 
-With this change we already get one of the major benefits of Saoirse's
+With this change we already get one of the major benefits of withoutboats'
 proposal, we don't have to edit every return location to wrap it with a result
 when we introduce an error return channel. However the Result is still visible,
 and you can think of the function definition as outside the "result monad" or
