@@ -18,13 +18,22 @@ As of yesterday the lang team is moving forward with a
 [proposal](https://github.com/rust-lang/rust/issues/70941) to resolve issues
 with `try` blocks, and presumably, begin stabilizing them. It seems that the
 majority is in favor of the proposal, where as historically this has been
-blocked on disagreements about ok-wrapping, so what changed? Two things, first,
+blocked on disagreements about ok-wrapping. So what changed? Two things, first,
 it became apparent that try blocks and ok wrapping could be separated from
-proposals for try fns and `throws` syntax. And second, [a
+proposals for try functions and `throws` syntax. And second, [a
 comment](https://www.reddit.com/r/rust/comments/fw4jsx/from_failure_to_fehler/fmmtt7o/)
 on reddit compellingly compared try and async blocks as similar effect systems.
 
-## Separation From `try fns`
+## Background
+
+Currently on rust, 
+
+```rust
+fn foo() -> Result<PathBuf, io::Error> {
+    let base = env::current_dir()?;
+    Ok(base.join("foo"))
+}
+```
 
 To date, most proposals around Ok-wrapping and throw expressions have had a
 pretty consistent form, something like this:
@@ -35,6 +44,9 @@ fn foo() -> PathBuf throws io::Error {
     base.join("foo")
 }
 ```
+
+## Separation From Try Functions
+
 
 Try blocks, however, have already existed on nightly for a while with support
 for Ok wrapping. You can go on [nightly right
@@ -53,8 +65,8 @@ fn foo() -> Result<PathBuf, io::Error> {
 ```
 
 It seems that Ok wrapping that is scoped to try blocks is much less
-controversial than a whole function level syntax for Result returning functions
-that includes try wrapping as a part of the proposal.
+controversial than try functions, and by separating the proposals the lang team
+was able to circumvent some of the issues that have been delaying try blocks.
 
 ## Comparison To Async
 
@@ -70,7 +82,7 @@ async { x.await } == x == (async{ x }).await
 
 The idea is that `async {}` and `await` cancel eachother out, and the same is
 true for `try {}` and `?`. This symmetry is particularly appealing to me, and
-is what I'd like to expand upon.
+is what I would like to expand upon.
 
 ## What I'd Like to See Next
 
@@ -97,8 +109,8 @@ With this change we already get one of the major benefits of Saoirse's
 proposal, we don't have to edit every return location to wrap it with a result
 when we introduce an error return channel. However the Result is still visible,
 and you can think of the function definition as outside the Result monad while
-the body is inside. If you want to keep doing Ok wrapping you can just leave
-off the try.
+the body is inside. And, if you want to keep Ok wrapping your returns you can
+just leave off the try and carry on with your life.
 
 Going back to the comparison for async, I don't see why we couldn't extend this
 change to also apply to `async` blocks. I can't think of any particular reasons
@@ -122,22 +134,26 @@ fn foo() -> impl Future<Output = i32> async {
 ```
 
 `async` and `try` blocks essentially end up becoming `do` notation for their
-respective monads. It remains to be seen whether or not any of this can
-actually parse successfully.
-
-Theres no reason to restrict this to only function body blocks:
+respective monads, and we can take this further. Theres no reason to restrict
+this to only function body blocks:
 
 ```rust
 let _: Result<T, E> = if s.is_empty() try { ... };
 
-let _ = || try { .. };
+// Already valid
+let _ = || try { ... };
+let _ || async { ... };
 
-let c = loop async {
+match foo try {
     ...
-}.await;
+}
+
+let c = loop try {
+    ...
+}?;
 ```
 
-And, if we wanted to, we could apply this generalization to other forms of
+And, if we wanted to, we could even apply this generalization to other forms of
 blocks, other than `async` and `try`, like `if`, `match`, `for`, and `while`
 expression blocks.
 
@@ -184,7 +200,9 @@ unsafe fn foo() unsafe {
 This leaves room for discussions over whether or not there should be a `try`
 effect equivalent to `async fn` where the function definition itself also
 exists within the monad, similar to the original `throw` proposals, completing
-the symmetry.
+the symmetry. It remains to be seen whether or not any of this can actually
+parse successfully but I hope others agree with me that it's worth digging
+into.
 
 ## Conclusion
 
