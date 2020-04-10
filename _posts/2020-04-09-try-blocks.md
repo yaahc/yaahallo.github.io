@@ -86,10 +86,10 @@ is what I would like to expand upon.
 
 ## What I'd Like to See Next
 
-To start we gotta stabilize try blocks, this is already in progress. There's
-not much to add on this point other than bikeshedding keywords like `raise`,
-`fail`, `throw`, or `yeet` for the keyword to return errors within the try
-block, which is not the point of this post.
+To start we gotta stabilize try blocks. This is already in progress so there's
+not much to add on this point other than bikeshedding which keyword, `raise`,
+`fail`, `throw`, or `yeet`  should be used to return errors within the try
+block. And I dont want to get into this, it is not the point of this post.
 
 Once we have try blocks I imagine I'm not going to love having to put a try
 block and indent level around the full body of every function that returns a
