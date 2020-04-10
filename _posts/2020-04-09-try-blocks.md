@@ -22,7 +22,8 @@ this has been blocked on disagreements about ok-wrapping. So what changed? Two
 things, first, it became apparent that try blocks and ok wrapping could be
 separated from proposals for try functions and `throws` syntax. And second, [a
 comment](https://www.reddit.com/r/rust/comments/fw4jsx/from_failure_to_fehler/fmmtt7o/)
-on reddit compellingly compared try and async blocks as similar effect systems.
+on reddit compellingly compared try and async blocks as similar effects
+_applied_ to blocks.
 
 ## Background
 
