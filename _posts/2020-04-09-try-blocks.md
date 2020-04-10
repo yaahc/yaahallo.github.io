@@ -26,7 +26,9 @@ on reddit compellingly compared try and async blocks as similar effect systems.
 
 ## Background
 
-Currently on rust, 
+Currently, fallibility in rust is expressed with the Result enum. This works
+like any other enum, in that you have to construct a variant manually, with
+results this is known as Ok-wrapping.
 
 ```rust
 fn foo() -> Result<PathBuf, io::Error> {
@@ -35,8 +37,9 @@ fn foo() -> Result<PathBuf, io::Error> {
 }
 ```
 
-To date, most proposals around Ok-wrapping and throw expressions have had a
-pretty consistent form, something like this:
+For a while now there have been proposals to introduce fallible functions, also
+known as try functions or throws syntax. These proposals have historically
+looked a little like this.
 
 ```rust
 fn foo() -> PathBuf throws io::Error {
@@ -45,13 +48,14 @@ fn foo() -> PathBuf throws io::Error {
 }
 ```
 
-## Separation From Try Functions
+## Separating Ok-Wrapping From Try Functions
 
-
-Try blocks, however, have already existed on nightly for a while with support
-for Ok wrapping. You can go on [nightly right
+Ok-wrapping and try functions are often bundled together in proposals about
+either, but this doesnt have to be the case. In fact, on nightly rust it's been
+possible to enable Ok-wrapping with try blocks for a while. You can go on
+[nightly right
 now](https://play.rust-lang.org/?version=nightly&mode=debug&edition=2018&gist=347d8f346dff1fc29273aa436421ea3c)
-and write the above like this:
+and write the previous example like this:
 
 ```rust
 #![feature(try_blocks)]
@@ -64,9 +68,13 @@ fn foo() -> Result<PathBuf, io::Error> {
 }
 ```
 
-It seems that Ok wrapping that is scoped to try blocks is much less
-controversial than try functions, and by separating the proposals the lang team
-was able to circumvent some of the issues that have been delaying try blocks.
+It turns out, when you mentally seperate the two propsals, as the lang team
+did, many of the people objecting to ok-wrapping realize what they _really_
+objected to were try functions. It's not the syntax sugar of wrapping returns
+that blocked the try block proposal, it was the idea that this would lead
+immediately to Result being stripped from the return type. And, when you dig
+deeper into ok-wrapping as a block level effect, it starts to lead to some
+attractive symmetry in the language.
 
 ## Comparison To Async
 
@@ -81,20 +89,19 @@ async { x.await } == x == (async{ x }).await
 ```
 
 The idea is that `async {}` and `await` cancel eachother out, and the same is
-true for `try {}` and `?`. This symmetry is particularly appealing to me, and
-is what I would like to expand upon.
+true for `try {}` and `?`.
 
 ## What I'd Like to See Next
 
 To start we gotta stabilize try blocks. This is already in progress so there's
 not much to add on this point other than bikeshedding which keyword, `raise`,
 `fail`, `throw`, or `yeet`  should be used to return errors within the try
-block. And I dont want to get into this, it is not the point of this post.
+block. And I dont want to get into that, it is not the point of this post.
 
-Once we have try blocks I imagine I'm not going to love having to put a try
-block and indent level around the full body of every function that returns a
-Result. To deal with this I would like to add support for annotating the
-function body block itself with `try`. With this change the above example
+However, once we have try blocks I imagine I'm not going to love having to put
+a try block and indent level around the full body of every function that
+returns a Result. To deal with this I would like to add support for annotating
+the function body block itself with `try`. With this change the above example
 becomes:
 
 
