@@ -219,7 +219,7 @@ We treat the keywords in `fn`, `if`, `match`, `loop`, `async`, `unsafe`, and
 `try`  as composable effects applied to blocks. This lets us concisely and
 intuitively compose types and control-flow via syntax sugar.
 
-The nice thing about this symmetry is that it helps neutralize a lot of
+And, the nice thing about this symmetry is that it helps neutralize a lot of
 people’s concerns around rust getting “too big”. We’re not making it bigger,
 we’re making it more consistent!
 
