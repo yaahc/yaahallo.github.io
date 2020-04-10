@@ -198,8 +198,7 @@ unsafe fn foo() unsafe {
 
 Or even treat expressions like `if`, `match` and `loop` as block effects as well:
 
-```
-
+```rust
 fn foo(bar: Bar) -> Baz match bar {
     Bar::Quix(q) => ...,
     ...
