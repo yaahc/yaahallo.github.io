@@ -147,7 +147,7 @@ fn foo() -> impl Future<Output = i32> async {
 
 In this version of rust `async` and `try` would effectively become block
 effects and act like `do` notation for their respective monads. Now, we could
-stop here, and only allow block effects in places where you couldnt already put
+stop here, and only allow block effects in places where you couldn't already put
 an expression, function body blocks and bare blocks. Or we can go for maximum
 consistency and allow block effects in any expression with a block:
 
