@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Customizing Error Reporting via Hooks"
-date: 2019-05-02 14:24
+date: 2020-08-20 10:30
 categories: rust error handling
 ---
 
