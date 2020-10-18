@@ -15,7 +15,7 @@ I've decided to structure this explanation by going over the problem I was tryin
 
 ## The Problem and Plan
 
-So first let me summarize the needs that Kat described for her theoretical error type. It needed a programmatic interface suitable for a library. I interpreted this to mean that it needed an enum that could easily be matched upon to handle specific kinds of errors. It needed the ability to capture backtraces, and it needed the ability to add contextual stack traces to the error, which I interpreted to mean she wanted to add new error messages to the error without necessarily changing the error's kind that you would match against, something like the `.wrap_err` method on `eyre` or the `.context` method on `anyhow`.
+So first let me summarize the needs that Kat described for their theoretical error type. It needed a programmatic interface suitable for a library. I interpreted this to mean that it needed an enum that could easily be matched upon to handle specific kinds of errors. It needed the ability to capture backtraces, and it needed the ability to add contextual stack traces to the error, which I interpreted to mean they wanted to add new error messages to the error without necessarily changing the error's kind that you would match against, something like the `.wrap_err` method on `eyre` or the `.context` method on `anyhow`.
 
 So here I formed a vague plan, I knew for the API I'd want to make an Error type and a Kind type, where the error was a struct with private internal members, and the Kind was a `non_exhaustive` enum. Getting the backtrace in there is pretty easy, just add a member for it to the outer `Error` type and capture it whenever an `Error` is constructed. The last feature is where I had to get a little clever, my plan was to make a separate `ErrorMessage` type that could be constructed from arbitrary `impl Display` types, and which optionally stored another `ErrorMessage` to act as the source to grab the previous error message whenever you add a new error message. I imagined an API like this:
 
@@ -190,7 +190,7 @@ pub enum Kind {
   <font color="#48B9C7"><b>= </b></font><b>note</b>: required by `from`
 </pre>
 
-Looks like its time to add some more traits to `Kind` and `Error`, if memory serves you only need `PartialEq` to use `==`, though I'm surprised the error message here doesn't indicate that:
+Looks like it's time to add some more traits to `Kind` and `Error`, if memory serves you only need `PartialEq` to use `==`, though I'm surprised the error message here doesn't indicate that:
 
 ```rust
 // struct Error { ... }
@@ -292,7 +292,7 @@ pub struct Error {
 }
 ```
 
-Alright `rustc`, gimmi your worse:
+Alright `rustc`, gimmi your worst:
 
 `rustc`:
 
@@ -345,7 +345,7 @@ impl From<Kind> for Error {
 }
 ```
 
-At this point rustc was immediately happy, so lets go straight into running it:
+At this point rustc was immediately happy, so let's go straight into running it:
 
 `cargo`:
 
@@ -393,7 +393,7 @@ Stack backtrace:
   13: _start
 </pre>
 
-_looks at backtrace_ hmm, somethings not right here, oh shit, I forgot to return the backtrace type via the `Error` trait, okay lets go back and add that.
+_looks at backtrace_ hmm, something's not right here, oh shit, I forgot to return the backtrace type via the `Error` trait, okay lets go back and add that.
 
 ```rust
 impl std::error::Error for Error {
@@ -665,7 +665,7 @@ Here you'll notice im using the `kind` itself to create the initial error messag
 <font color="#F15D22"><b>error</b></font><b>: aborting due to 2 previous errors</b>
 </pre>
 
-On god damnit, you can't derive `Debug` with a `dyn Display` type, thats annoying, okay w/e:
+Oh god damnit, you can't derive `Debug` with a `dyn Display` type, thats annoying, okay w/e:
 
 ```rust
 struct ErrorMessage {
