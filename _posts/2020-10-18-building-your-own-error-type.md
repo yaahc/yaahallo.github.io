@@ -5,11 +5,13 @@ date: 2020-10-18 10:30
 categories: rust error handling
 ---
 
+I know this blog post looks long but I swear its mostly snippets of `rustc` errors that you can just skim past.
+
 # Introduction
 
 So yesterday I had a friend on twitter [ask for help](https://twitter.com/zkat__/status/1317613730830512128?s=20) creating an error type for a library that acted like anyhow but was suitable to expose as part of a library API. I tossed something together based on my experience writing error handling libraries. Then [another mutual](https://twitter.com/felipesere/status/1317790349880938497) pointed out that they were amazed by the code snippet I'd posted and asked if I could write a blog post about it. So here I am.
 
-I've decided to structure this explanation by going over the problem I was trying to solve, and how I built up the solution. The techniques here aren't new or anything, the overall design is very similar to `std::io::Error` and the error kind pattern described in [The Failure Book](https://rust-lang-nursery.github.io/failure/), with a little hint of trait fun that I learned from working with the source code in `anyhow` in the process of writing `eyre`. I just applied the design patterns that are common in the ecosystem to this particular problem in the best way I could think of. Most importantly, I don't want anyone coming away from this post thinking this is the best way to write an error type for a library, and that you should all copy this pattern. My goal is to get everyone comfortable mixing and matching design patterns to get an error type that matches their needs and their software design patterns best.
+I've decided to structure this explanation by going over the problem I was trying to solve, and how I built up the solution. The techniques here aren't new or anything, the overall design is very similar to `std::io::Error` and the error kind pattern described in [The Failure Book](https://rust-lang-nursery.github.io/failure/), with a little hint of trait fun that I learned from working with the source code in `anyhow` in the process of writing `eyre`. I just applied the design patterns that are common in the ecosystem to this particular problem in the best way I could think of. Most importantly, I don't want anyone coming away from this post thinking this is the best way to write an error type for a library, and that you should all copy this pattern. My goal is to get everyone comfortable mixing and matching design patterns to get an error type that matches their needs and best fits in to the rest of their software architecture.
 
 ## The Problem and Plan
 
