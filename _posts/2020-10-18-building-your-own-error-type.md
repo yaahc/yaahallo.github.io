@@ -15,9 +15,9 @@ I've decided to structure this explanation by going over the problem I was tryin
 
 ## The Problem and Plan
 
-So first let me summarize the needs that Kat described for her theoretical error type. It needed a programatic interface suitible for a library. I interpreted this to mean that it needed an enum that could easily be matched upon to handle specific kinds of errors. It needed the ability to capture backtraces, and it needed the ability to add contextual stack traces to the error, which I interpreted to mean she wanted to add new error messages to the error without necessarily changing the error's kind that you would match against, something like the `.wrap_err` method on `eyre` or the `.context` method on `anyhow`.
+So first let me summarize the needs that Kat described for her theoretical error type. It needed a programmatic interface suitable for a library. I interpreted this to mean that it needed an enum that could easily be matched upon to handle specific kinds of errors. It needed the ability to capture backtraces, and it needed the ability to add contextual stack traces to the error, which I interpreted to mean she wanted to add new error messages to the error without necessarily changing the error's kind that you would match against, something like the `.wrap_err` method on `eyre` or the `.context` method on `anyhow`.
 
-So here I formed a vague plan, I knew for the API I'd want to to make an Error type and a Kind type, where the error was a struct with private internal members, and the Kind was a `non_exhaustive` enum. Getting the backtrace in there is pretty easy, just add a member for it to the outer `Error` type and capture it whenever an `Error` is constructed. The last feature is where I had to get a little clever, my plan was to make a separate `ErrorMessage` type that could be constructed from arbitrary `impl Display` types, and which optionally stored another `ErrorMessage` to act as the source to grab the previous error message whenever you add a new error message. I imagined an API like this:
+So here I formed a vague plan, I knew for the API I'd want to make an Error type and a Kind type, where the error was a struct with private internal members, and the Kind was a `non_exhaustive` enum. Getting the backtrace in there is pretty easy, just add a member for it to the outer `Error` type and capture it whenever an `Error` is constructed. The last feature is where I had to get a little clever, my plan was to make a separate `ErrorMessage` type that could be constructed from arbitrary `impl Display` types, and which optionally stored another `ErrorMessage` to act as the source to grab the previous error message whenever you add a new error message. I imagined an API like this:
 
 ```rust
 fn parse_config() -> Result<(), Error> {
@@ -38,7 +38,7 @@ Backtrace:
 
 Or something along those lines.
 
-### Programatic API - aka Reacting To Specific Errors
+### Programmatic API - aka Reacting To Specific Errors
 
 So I started by sketching out the API and the basic types. I started with just the handling bit because it seemed easiest. I split it into a `lib.rs` file and another `examples/report.rs` file to easily run the "test" to visually inspect the output and make sure that all the APIs worked together as expected:
 
