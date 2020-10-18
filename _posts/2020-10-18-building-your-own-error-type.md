@@ -347,6 +347,8 @@ impl From<Kind> for Error {
 
 At this point rustc was immediately happy, so lets go straight into running it:
 
+`cargo`:
+
 <pre><font color="#4E9A06"><b>❯</b></font> RUST_LIB_BACKTRACE=1 cargo +nightly run --example report
 <font color="#4E9A06"><b>    Finished</b></font> dev [unoptimized + debuginfo] target(s) in 0.01s
 <font color="#4E9A06"><b>     Running</b></font> `target/debug/examples/report`
@@ -400,6 +402,8 @@ impl std::error::Error for Error {
     }
 }
 ```
+
+`cargo`:
 
 <pre><font color="#4E9A06"><b>❯</b></font> RUST_LIB_BACKTRACE=1 cargo +nightly run --example report
 <font color="#4E9A06"><b>    Finished</b></font> dev [unoptimized + debuginfo] target(s) in 0.00s
@@ -856,7 +860,7 @@ impl std::error::Error for Error {
 
 Oh yea, gotta impl `Error` on `ErrorMessage` if I want to be able to make the previous error messages available in the chain of `source` errors, awe shit I know where this is going...
 
-```rustc
+```rust
 impl std::error::Error for ErrorMessage {
     fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
         self.source.as_ref().map(|e| e as _)
