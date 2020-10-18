@@ -730,7 +730,7 @@ impl fmt::Display for Error {
 // }
 ```
 
-_palpatine.jpg: yess, let the trait flow through you_
+![yes, yes... let the trait flow through you](/assets/trait_palpatine.png)
 
 `cargo`:
 
