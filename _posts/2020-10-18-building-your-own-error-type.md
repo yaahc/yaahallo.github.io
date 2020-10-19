@@ -519,7 +519,7 @@ where
 
 For now I'm going to leave this unimplemented, because we haven't yet created the spot to store our error messages, rustc seems pretty happy with us tho, the only complaint is about the unused `msg` argument.
 
-The next step is we need a way to store an ErrorMessage, and a previous error message, such that we can create a linked list of sources internally without losing access to our `Kind` or `Backtrace`.
+The next step is we need a way to store an `ErrorMessage`, and a previous error message, such that we can create a linked list of sources internally without losing access to our `Kind` or `Backtrace`.
 
 We start with a definition for the error message struct that looks like a singly linked list:
 
