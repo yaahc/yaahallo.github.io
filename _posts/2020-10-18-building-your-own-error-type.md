@@ -9,15 +9,15 @@ I know this blog post looks long but I swear its mostly snippets of `rustc` erro
 
 # Introduction
 
-So yesterday I had a friend on twitter [ask for help](https://twitter.com/zkat__/status/1317613730830512128?s=20) creating an error type for a library that acted like anyhow but was suitable to expose as part of a library API. I tossed something together based on my experience writing error handling libraries. Then [another mutual](https://twitter.com/felipesere/status/1317790349880938497) pointed out that they were amazed by the code snippet I'd posted and asked if I could write a blog post about it. So here I am.
+Yesterday I had a friend on twitter [ask for help](https://twitter.com/zkat__/status/1317613730830512128?s=20) creating an error type for a library that acted like anyhow but was suitable to expose as part of a library API. I tossed something together based on my experience writing error handling libraries. Then [another mutual](https://twitter.com/felipesere/status/1317790349880938497) pointed out that they were amazed by the code snippet I'd posted and asked if I could write a blog post about it. So here I am.
 
 I've decided to structure this explanation by going over the problem I was trying to solve, and how I built up the solution. The techniques here aren't new or anything, the overall design is very similar to `std::io::Error` and the error kind pattern described in [The Failure Book](https://rust-lang-nursery.github.io/failure/), with a little hint of trait fun that I learned from working with the source code in `anyhow` in the process of writing `eyre`. I just applied the design patterns that are common in the ecosystem to this particular problem in the best way I could think of. Most importantly, I don't want anyone coming away from this post thinking this is the best way to write an error type for a library, and that you should all copy this pattern. My goal is to get everyone comfortable mixing and matching design patterns to get an error type that matches their needs and best fits in to the rest of their software architecture.
 
 ## The Problem and Plan
 
-So first let me summarize the needs that Kat described for their theoretical error type. It needed a programmatic interface suitable for a library. I interpreted this to mean that it needed an enum that could easily be matched upon to handle specific kinds of errors. It needed the ability to capture backtraces, and it needed the ability to add contextual stack traces to the error, which I interpreted to mean they wanted to add new error messages to the error without necessarily changing the error's kind that you would match against, something like the `.wrap_err` method on `eyre` or the `.context` method on `anyhow`.
+First let me summarize the needs that Kat described for their theoretical error type. It needed a programmatic interface suitable for a library. I interpreted this to mean that it needed an enum that could easily be matched upon to handle specific kinds of errors. It needed the ability to capture backtraces, and it needed the ability to add contextual stack traces to the error, which I interpreted to mean they wanted to add new error messages to the error without necessarily changing the error's kind that you would match against, something like the `.wrap_err` method on `eyre` or the `.context` method on `anyhow`.
 
-So here I formed a vague plan, I knew for the API I'd want to make an Error type and a Kind type, where the error was a struct with private internal members, and the Kind was a `non_exhaustive` enum. Getting the backtrace in there is pretty easy, just add a member for it to the outer `Error` type and capture it whenever an `Error` is constructed. The last feature is where I had to get a little clever, my plan was to make a separate `ErrorMessage` type that could be constructed from arbitrary `impl Display` types, and which optionally stored another `ErrorMessage` to act as the source to grab the previous error message whenever you add a new error message. I imagined an API like this:
+I formed a vague plan, I knew for the API I'd want to make an Error type and a Kind type, where the error was a struct with private internal members, and the Kind was a `non_exhaustive` enum. Getting the backtrace in there is pretty easy, just add a member for it to the outer `Error` type and capture it whenever an `Error` is constructed. The last feature is where I had to get a little creative, my plan was to make a separate `ErrorMessage` type that could be constructed from arbitrary `impl Display` types, and which optionally stored another `ErrorMessage` to act as the source to grab the previous error message whenever you add a new error message. I imagined an API like this:
 
 ```rust
 fn parse_config() -> Result<(), Error> {
@@ -40,7 +40,7 @@ Or something along those lines.
 
 ### Programmatic API - aka Reacting To Specific Errors
 
-So I started by sketching out the API and the basic types. I started with just the handling bit because it seemed easiest. I split it into a `lib.rs` file and another `examples/report.rs` file to easily run the "test" to visually inspect the output and make sure that all the APIs worked together as expected:
+I started by sketching out the API and the basic types. First with just the handling bit because it seemed easiest. I split it into a `lib.rs` file and another `examples/report.rs` file to easily run the "test" to visually inspect the output and make sure that all the APIs worked together as expected:
 
 `lib.rs`:
 
@@ -280,7 +280,7 @@ Beautiful, alright so now we've got our initial error type setup. We compile, we
 
 ## Backtrace
 
-So here I'll start by just slapping a `Backtrace` in the struct and let rustc remind me what features to enable. In this example I'm going to use `std::backtrace::Backtrace` because it's easier to work with and is compatible with `eyre` and `anyhow` by default. I could make this work with `backtrace::Backtrace` from the backtrace-rs crate but its a bit more involved so I'll leave that to a later post if people are interested. Hopefully it won't be needed however because backtrace stabilization is starting to move forward again ^_^
+Here I'll start by just slapping a `Backtrace` in the struct and let rustc remind me what features to enable. In this example I'm going to use `std::backtrace::Backtrace` because it's easier to work with and is compatible with `eyre` and `anyhow` by default. I could make this work with `backtrace::Backtrace` from the backtrace-rs crate but its a bit more involved so I'll leave that to a later post if people are interested. Hopefully it won't be needed however because backtrace stabilization is starting to move forward again ^_^
 
 ```rust
 use std::backtrace::Backtrace;
@@ -448,7 +448,7 @@ There we go, perfect. We can see the error being constructed from the `Kind` in 
 
 ## Context Stack Traces aka Wrapping Errors Internally
 
-So here I'm gonna start much like I did before, I'll sketch out the new API and fill it in based on compiler errors. I tweek the example throwing functions to add the extra method call I want to make. In this case however I know that the new method I'm adding will not be added as an inherent method on `Kind` or `Error`, in order to use it through `Result` the same way you can with `eyre` and `anyhow` you need to do it as an extension trait. So I'll go ahead and define that trait as well.
+Here I'm gonna start much like I did before, I'll sketch out the new API and fill it in based on compiler errors. I tweek the example throwing functions to add the extra method call I want to make. In this case however I know that the new method I'm adding will not be added as an inherent method on `Kind` or `Error`, in order to use it through `Result` the same way you can with `eyre` and `anyhow` you need to do it as an extension trait. I'll go ahead and define that trait as well.
 
 Disclaimer, the trait I'm going to define here is something that I first learned about from `anyhow`'s source and it took me months to get good enough with traits to figure out how to write it as cleanly as this. Even then when I was first writing this example I had to go look up [the source code](https://docs.rs/color-eyre/0.5.6/src/color_eyre/section/mod.rs.html#135-318) for the  `Section` trait in `color-eyre` to remember exactly how it's supposed to be done.
 
@@ -519,9 +519,9 @@ where
 
 For now I'm going to leave this unimplemented, because we haven't yet created the spot to store our error messages, rustc seems pretty happy with us tho, the only complaint is about the unused `msg` argument.
 
-So the next step is we need a way to store an ErrorMessage, and a previous error message, such that we can create a linked list of sources internally without losing access to our `Kind` or `Backtrace`.
+The next step is we need a way to store an ErrorMessage, and a previous error message, such that we can create a linked list of sources internally without losing access to our `Kind` or `Backtrace`.
 
-So we start with a definition for the error message struct that looks like a singly linked list:
+We start with a definition for the error message struct that looks like a singly linked list:
 
 ```rust
 struct ErrorMessage {
