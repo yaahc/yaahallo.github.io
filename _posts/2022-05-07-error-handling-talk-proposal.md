@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "RustConf 2020 Error Handling Proposal"
+title: "RustConf 2020 CFP Proposal"
 date: 2022-05-07 12:00
 categories: rust error handling rustconf proposal cfp
 ---
 
-# "Error Handling Isn't All About Errors" CFP Proposal
+# Rustconf 2020 CFP Proposal
 
 I figured seeing examples of proposals might help with people who are putting
 together proposals for this year's RustConf, so here's the proposal from my
